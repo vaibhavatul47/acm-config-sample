@@ -1,0 +1,31 @@
+apiVersion: vm.cluster.gke.io/v1
+kind: VirtualMachineDisk
+metadata:
+  name: disk-from-registry
+spec:
+  source:
+    registry:
+      url: "docker://kubevirt/fedora-cloud-container-disk-demo"
+  size: 8Gi
+  storageClassName: local-shared
+---
+apiVersion: vm.cluster.gke.io/v1
+kind: VirtualMachine
+metadata:
+  name: my-kube-vm
+  namespace: default
+  labels:
+    special: key-kubevm
+spec:
+  osType: Linux
+  interfaces:
+  - name: eth4
+    networkName: pod-network
+  compute:
+    cpu:
+      vcpus: 3
+    memory:
+      capacity: 2G
+  disks:
+  - virtualMachineDiskName: disk-from-registry
+    boot: true
