@@ -12,7 +12,7 @@ spec:
 apiVersion: vm.cluster.gke.io/v1
 kind: VirtualMachine
 metadata:
-  name: my-kube-vm
+  name: my-kube-vm-2
   namespace: default
   labels:
     special: key-kubevm
@@ -23,9 +23,9 @@ spec:
     networkName: pod-network
   compute:
     cpu:
-      vcpus: 3
+      vcpus: 1
     memory:
-      capacity: 2G
+      capacity: 1G
   disks:
   - virtualMachineDiskName: disk-from-registry
     boot: true
