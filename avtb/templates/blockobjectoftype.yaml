@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: blockobjectsoftype
+spec:
+  crd:
+    spec:
+      names:
+        kind: BlockObjectsOfType
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          type: object
+          properties:
+            types:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package blockobjectsoftype
+        violation[{"msg": msg, "details": {"invalid_type": invalid_type}}] {
+          provided  := { input.review.object.type }
+          forbidden := {type | type := input.parameters.types[_]}
+          invalid_type := provided - forbidden
+          count(invalid_type) = 0
+          msg := sprintf("Object of type: %v, is not allowed", [invalid_type])
+        }
