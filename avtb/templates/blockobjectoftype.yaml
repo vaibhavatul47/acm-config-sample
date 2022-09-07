@@ -25,5 +25,5 @@ spec:
           forbidden := {type | type := input.parameters.forbiddenTypes[_]}
           invalid_type := provided - forbidden
           count(invalid_type) = 0
-          msg := sprintf("Object of type: %v, is not allowed", [invalid_type])
+          msg := sprintf("Object of type: %v, is not allowed", [provided])
         }
