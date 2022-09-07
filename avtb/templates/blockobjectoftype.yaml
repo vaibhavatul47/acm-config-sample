@@ -20,10 +20,10 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package blockobjectsoftype
-        violation[{"msg": msg, "details": {"invalid_type": invalid_type}}] {
+        violation[{"msg": msg, "details": {"provided_type": provided}}] {
           provided  := { input.review.object.type }
           forbidden := {type | type := input.parameters.forbiddenTypes[_]}
-          invalid_type := provided - forbidden
-          count(invalid_type) = 0
+          valid_type := provided - forbidden
+          count(valid_type) = 0
           msg := sprintf("Object of type: %v, is not allowed", [provided])
         }
