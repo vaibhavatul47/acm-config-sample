@@ -3,6 +3,6 @@ kind: PubSubTopic
 metadata:
   labels:
     foo: bar
-    costcenter: "12345"
+    # costcenter: "12345"
   name: foobar-topic
   namespace: config-control
