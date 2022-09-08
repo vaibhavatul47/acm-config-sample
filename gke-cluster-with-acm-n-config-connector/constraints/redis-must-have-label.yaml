@@ -7,5 +7,7 @@ spec:
     kinds:
       - apiGroups: ["redis.cnrm.cloud.google.com"]
         kinds: ["RedisInstance"]
+      - apiGroups: ["pubsub.cnrm.cloud.google.com"]
+        kinds: ["PubSubTopic"]
   parameters:
     labels: ["costcenter"]
